@@ -11,18 +11,16 @@ pollutantmean <- function(directory, pollutant, id = 1:332) {
     }
     
     stopifnot(file.exists(files))
-    
-    means <- 0
-    count <- 0
+
+    vals <- numeric()
     for (f in files) {
         lines <- read.csv(f)
         data <- lines[pollutant]
         good <- data[!is.na(data)]
         if (length(good) > 0) {
-            means <- means + mean(good)
-            count <- count + 1
+            vals <- append(vals, good)
         }
     }
     
-    means / count
+    mean(vals)
 }
